@@ -1,0 +1,24 @@
+#!/bin/bash
+#bracketology-run
+
+# Stop on errors
+set -Eeuo pipefail
+
+# create database
+if [ ! -e var/bracketology.sqlite3 ]
+then  # if the database doesn't exist, create it
+    ./bin/bracketology-db create
+else
+    echo "Database already exists."
+fi
+
+# set environment variables
+export FLASK_ENV=development
+export FLASK_APP=bracketology
+export SPOTIPY_CLIENT_ID='70abe949d12e426f8f902e7de2987b3a'
+export SPOTIPY_REDIRECT_URI='http://localhost:8000/'
+# CLIENT SECRET NOT INCLUDED
+export BRACKETOLOGY_SETTINGS=config.py
+
+# run flask
+flask run --host 0.0.0.0 --port 8000

@@ -19,7 +19,7 @@ venv3/
 .ropeproject/
 .vscode/
 
-/bin/friendify-init
+/bin/bracketology-init
 
 *.pem
 *.db

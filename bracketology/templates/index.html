@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bracketology</title>
+  <meta name="author" content="Ved Ameresh">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{url_for('static', filename = '/css/style.css')}}">
+  <script src="{{url_for('static', filename = '/js/script.js')}}"></script>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class= "col-12" align="left">
+                <span class="align-text-bottom"><h1>Bracketology</h1></span>
+                <span class="align-text-bottom"><h3>Powered by Spotify</h3></span>
+            </div>
+        </div>
+        <br>
+        <form class = "search-bar row" method="post" enctype="multipart/form-data">
+            <input class = "search-input col-10" type="text" name="artist" placeholder="Search an artist" autocomplete="off"/>
+            <input class = "search-button col-2" type="submit" name="search" value="Search"/>
+        </form>
+        </br>
+        </br>
+
+        {% if songs|length >= 64 %}
+            {% for i in range(0,64) %}
+            <div class = "row">
+                <div class="col-1" align="left">
+                    <h4>{{i + 1}}.</h4>
+                </div>
+                <div class="col-8" align="left">
+                    <h4>{{songs[i]["name"]}}</h4>
+                </div>
+                <div class="col-3" align="left">
+                    <h4>Popularity:{{songs[i]["popularity"]}}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        {% elif songs|length >= 32 %}
+            {% for i in range(0,32) %}
+            <div class = "row">
+                <div class="col-1" align="left">
+                    <h4>{{i + 1}}.</h4>
+                </div>
+                <div class="col-8" align="left">
+                    <h4>{{songs[i]["name"]}}</h4>
+                </div>
+                <div class="col-3" align="left">
+                    <h4>Popularity:{{songs[i]["popularity"]}}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        {% elif songs|length >= 16 %}
+            {% for i in range(0,16) %}
+            <div class = "row">
+                <div class="col-1" align="left">
+                    <h4>{{i + 1}}.</h4>
+                </div>
+                <div class="col-8" align="left">
+                   <h4>{{songs[i]["name"]}}</h4>
+                </div>
+                <div class="col-3" align="left">
+                    <h4>Popularity:{{songs[i]["popularity"]}}</h4>
+                </div>
+            </div>
+            {% endfor %}
+        {% elif songs|length >= 8 %}
+            <div class = "row">
+                <div class="col-12" align="left">
+                    <h4>Not enough music for a bracket</h4>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+
+
+</html>

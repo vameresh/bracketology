@@ -1,0 +1,58 @@
+#!/bin/bash
+# bracketology-db
+
+# Stop on errors
+# See https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
+set -Eeuo pipefail
+
+# Sanity check command line options
+usage() {
+  echo "Usage: $0 (create|destroy|reset|dump)"
+}
+
+if [ $# -ne 1 ]; then
+  usage
+  exit 1
+fi
+
+# Parse argument.  $1 is the first argument
+case $1 in
+  #The create argument runs the sqlite3 command line utility. 
+  #You might also copy files used to initialize an uploads/ directory.
+  "create")
+    if [ ! -e var/bracketology.sqlite3 ]
+    then  # if the database doesn't exist, create it
+      set -x;
+      sqlite3 var/bracketology.sqlite3 < sql/schema.sql;
+    else
+      echo "Error: database already exists."
+      exit 1 # unsure if we should exit 1 here
+    fi
+    ;;
+  
+  # The destroy argument removes the database. 
+  # You might also want to remove user-created files like an uploads/ directory.
+  "destroy")
+    set -x;
+    rm -rf var/bracketology.sqlite3;
+    ;;
+  
+  # The reset argument does the same thing as destroy followed by create.
+  "reset")
+    set -x;
+    rm -rf var/bracketology.sqlite3;
+    sqlite3 var/bracketology.sqlite3 < sql/schema.sql;
+    ;;
+
+  # The dump argument prints everything in the database.
+  "dump")
+    set -x;
+    sqlite3 -batch -line var/bracketology.sqlite3 'SELECT * FROM artists';
+    sqlite3 -batch -line var/bracketology.sqlite3 'SELECT * FROM albums';
+    sqlite3 -batch -line var/bracketology.sqlite3 'SELECT * FROM songs';
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
+esac
