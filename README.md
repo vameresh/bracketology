@@ -6,5 +6,5 @@ Built using Python Flask, Jinja Templating, SQLite3, and Spotify API.
 
 ## Pictures
 
-Add Friends!
+Example Usage
 ![alt text](https://github.com/vameresh/bracketology/blob/master/pictures/splash.PNG?raw=true)
